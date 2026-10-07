@@ -1,9 +1,9 @@
 plugins { id 'com.android.application' }
 android {
-    namespace 'dev.chet.miccontrol'
+    namespace 'dev.chet.speakercontrol'
     compileSdk 35
     defaultConfig {
-        applicationId 'dev.chet.miccontrol'
+        applicationId 'dev.chet.speakercontrol'
         minSdk 33
         targetSdk 35
         versionCode 100
