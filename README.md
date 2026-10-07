@@ -44,3 +44,6 @@ The key is generated once for this source archive and embedded in the APK. Keep 
 ## Framework references
 - https://android.googlesource.com/platform/frameworks/base/+/refs/heads/android16-release/services/core/java/com/android/server/audio/AudioService.java
 - https://android.googlesource.com/platform/frameworks/base/+/refs/heads/android16-release/core/java/android/hardware/SensorPrivacyManager.java
+
+## Build workflow fix (October 7, 2026)
+The setup-android action now explicitly installs only `platform-tools`, avoiding its obsolete default `tools` package. API 35 and build-tools 35.0.0 remain installed by the following sdkmanager step. App version and Tasker token are unchanged.
