@@ -1,5 +1,6 @@
 package dev.chet.miccontrol;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -69,7 +70,7 @@ public final class MicHook implements IXposedHookLoadPackage {
     }
     private static void execute(Context c, String command, boolean privacy, String reply, String request) {
         AudioManager audio = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
-        Object sensor = c.getSystemService("sensor_privacy");
+        Object sensor = getSensorPrivacyService(c);
         if (audio == null) throw new IllegalStateException("AudioManager unavailable");
         boolean desiredMuted = audio.isMicrophoneMute();
         if ("ENABLE".equals(command)) desiredMuted = false;
@@ -113,6 +114,12 @@ public final class MicHook implements IXposedHookLoadPackage {
             } catch (Throwable t) { log("status", t); respond(c, reply, command, request, false, "ERROR: " + t); }
             finally { Binder.restoreCallingIdentity(identity); }
         }, "STATUS".equals(command) ? 0 : 350);
+    }
+    // This hidden framework service is available in system_server, but excluded
+    // from the public SDK's @ServiceName IntDef. Suppress only this lookup.
+    @SuppressLint("WrongConstant")
+    private static Object getSensorPrivacyService(Context c) {
+        return c.getSystemService("sensor_privacy");
     }
     private static Boolean readPrivacy(Object manager, int toggle) {
         if (manager == null) return null;

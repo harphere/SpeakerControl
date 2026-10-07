@@ -47,3 +47,6 @@ The key is generated once for this source archive and embedded in the APK. Keep 
 
 ## Build workflow fix (October 7, 2026)
 The setup-android action now explicitly installs only `platform-tools`, avoiding its obsolete default `tools` package. API 35 and build-tools 35.0.0 remain installed by the following sdkmanager step. App version and Tasker token are unchanged.
+
+## Lint fix (October 7, 2026)
+Isolated the hidden sensor_privacy lookup in a helper with a narrowly scoped WrongConstant suppression. The public SDK does not list this framework-only service. All other lint checks remain enabled. Includes the earlier explicit platform-tools workflow fix. App version and Tasker token unchanged.
